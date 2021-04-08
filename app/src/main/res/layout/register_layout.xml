@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/editEmail"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:met_textColorHint="@android:color/black"
+            app:met_baseColor="@android:color/black"
+            app:met_primaryColor="@android:color/black"
+            app:met_iconPadding="0dp"
+            android:drawableEnd="@drawable/ic_email"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/editName"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:met_textColorHint="@android:color/black"
+            app:met_baseColor="@android:color/black"
+            app:met_primaryColor="@android:color/black"
+            app:met_iconPadding="0dp"
+            android:drawableEnd="@drawable/ic_account"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/editPassword"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:met_textColorHint="@android:color/black"
+            app:met_baseColor="@android:color/black"
+            app:met_primaryColor="@android:color/black"
+            app:met_iconPadding="0dp"
+            android:drawableEnd="@drawable/ic_password"/>
+
+
+</LinearLayout>
