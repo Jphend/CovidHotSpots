@@ -1,4 +1,3 @@
-
 const url = "mongodb+srv://jonwil:Hpkjw%4019@Cluster1.zyqmu.mongodb.net/covidhotspots?retryWrites=true&w=majority";
 const express = require('express');
 const app = express();
@@ -25,8 +24,6 @@ async function createLocationEntry(email, lat, lng) {
     return new Location({
         email,
         type: 'Point',
-        //coordinates: latLng
-        //coordinates: [lat, lng],
         lat: [lat],
         lng: [lng]
     }).save()
@@ -40,7 +37,7 @@ async function addNewLocation(email, lat, lng) {
 }
 
 async function getLocations(email) {
-    app.get('/', async(req, result, next) => {
+    app.get('/', async(req, result) => {
         await Location.findOne({'email': email}, {lat: 1, lng: 1, _id: 0}).lean().then(res => {
             console.log(JSON.stringify(res));
             result.send(JSON.stringify(res));
@@ -82,7 +79,7 @@ function checkHashPassword(userPassword, salt) {
         const salt = hash_data.salt;
         const name = postData.name;
         const email = postData.email;
-        console.log(email);
+        //console.log(email);
 
         User.find({'email': email}).countDocuments(function (err, number) {
             console.log(number);
@@ -104,7 +101,6 @@ function checkHashPassword(userPassword, salt) {
     app.post('/login', (request, response) => {
         const postData = request.body;
         const email = postData.email;
-        const email2 = postData.email;
         const userPassword = postData.password;
 
         User.findOne({'email': email}).countDocuments(function (err, number) {
@@ -113,8 +109,8 @@ function checkHashPassword(userPassword, salt) {
                 console.log('Email does not exist, please register');
             } else {
                 User.findOne({'email': email}, function (err, user) {
-                    const user1 = User.findOne({'email':email});
-                    console.log(user1);
+                    //const user1 = User.findOne({'email':email});
+                    //console.log(user1);
                     const salt = user.salt;
                     const hashedPassword = checkHashPassword(userPassword, salt).passwordHash;
                     const encryptedPassword = user.password;
@@ -122,23 +118,6 @@ function checkHashPassword(userPassword, salt) {
                         response.json('Login Success!');
                         console.log('Login Success!')
                         getLocations(email);
-                        //console.log(email);
-                        //console.log(email2);
-                        // if(!(User.findOne({'email': email}) === user1)) {
-                        //     console.log("Here");
-                        //     getLocations(email2);
-                        // }
-
-
-                        //app.get('/', async(reque, res, next) => {
-                            //Location.find({'email':email},{lat: 1, lng: 1, _id: 0}).lean().exec(function (err, locations) {
-                                //const points = JSON.stringify(locations);
-                                //console.log(email);
-                                //res.send(points);
-                                //console.log(await getLocations(email));
-                                //res.send(await getLocations(email));
-                            //})
-                        //});
                     }
                     else {
                         response.json('Login Fail, email or password is incorrect!');
@@ -152,9 +131,6 @@ function checkHashPassword(userPassword, salt) {
     app.post('/clickLocation', (request, response) => {
         const postData = request.body;
         const email = postData.email;
-        //const latLng = postData.coordinates;
-        //const lat = postData.coordinates;
-        //const lng = postData.coordinates;
         const lat = postData.lat;
         const lng = postData.lng;
 

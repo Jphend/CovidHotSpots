@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import com.example.covidhotspots.LoginActivity;
+import com.example.covidhotspots.ui.login.LoginActivity;
 import com.example.covidhotspots.R;
 import com.example.covidhotspots.Retrofit.RetrofitClient;
 import com.example.covidhotspots.Retrofit.Service;

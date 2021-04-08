@@ -1,4 +1,4 @@
-package com.example.covidhotspots;
+package com.example.covidhotspots.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.covidhotspots.MainActivity;
+import com.example.covidhotspots.R;
 import com.example.covidhotspots.Retrofit.RetrofitClient;
 import com.example.covidhotspots.Retrofit.Service;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
@@ -114,12 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(res -> {
-                                    //Toast.makeText(LoginActivity.this, ""+res, Toast.LENGTH_LONG).show();
-                                        //JSONArray arr = new JSONArray(res);
-                                        //System.out.println(arr);
                                         //if(!arr.isNull(0)) {
-                                            //JSONObject obj = arr.getJSONObject(0);
-
                                             JSONObject obj = new JSONObject(res);
                                             String[] lngs = obj.getString("lng").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
                                             String[] lats = obj.getString("lat").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
