@@ -1,4 +1,3 @@
-const url = "mongodb+srv://jonwil:Hpkjw%4019@Cluster1.zyqmu.mongodb.net/covidhotspots?retryWrites=true&w=majority";
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
