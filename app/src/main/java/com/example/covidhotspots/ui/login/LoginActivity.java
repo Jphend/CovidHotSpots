@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(res -> {
-                                        //if(!arr.isNull(0)) {
+                                        if(res.length() > 9) {
                                             JSONObject obj = new JSONObject(res);
                                             String[] lngs = obj.getString("lng").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
                                             String[] lats = obj.getString("lat").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                                             }
                                             setCoordinates(coords);
 
-                                            //}
+                                            }
                                     startActivity(intent);
 
                                 }));

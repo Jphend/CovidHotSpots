@@ -3,11 +3,7 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:onClick="searchLocation"
-    android:tint="#FFFFFF"
+    android:tint="#000000"
     android:alpha="0.8">
   <path
       android:fillColor="@android:color/white"

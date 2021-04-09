@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -36,10 +38,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
 
     //private HomeViewModel homeViewModel;
     private GoogleMap mMap;
+    private View mapView;
     private LocationManager locationManager;
     private LocationListener locationListener;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -51,8 +54,9 @@ public class HomeFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
             }
         }
     }
@@ -62,15 +66,35 @@ public class HomeFragment extends Fragment {
 
         Retrofit retrofitClient = RetrofitClient.getInstance();
         service = retrofitClient.create(Service.class);
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        mapView = inflater.inflate(R.layout.fragment_home, container, false);
+        return mapView;
     }
 
-    private final OnMapReadyCallback callback = new OnMapReadyCallback() {
+    //private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
 
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
+            mMap.setOnMyLocationButtonClickListener(this);
+            mMap.setMyLocationEnabled(true);
+            mMap.setOnMyLocationButtonClickListener(this);
+
+
+
+            //Sets entire map padding, repositions location button but also repositions camera
+            //mMap.setPadding(0,2100,0,0);
+
+            //find location button
+            View locationButton = ((View) mapView.findViewById(1).getParent()).findViewById(2);
+
+            RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+            // Position button at bottom right
+            rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+            rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+            rlp.setMargins(0, 0, 30, 30);
+
+
 
             locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
@@ -98,6 +122,8 @@ public class HomeFragment extends Fragment {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             } else {
+                mMap.setMyLocationEnabled(true);
+
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
                 Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -141,7 +167,7 @@ public class HomeFragment extends Fragment {
                 return false;
             });
         }
-    };
+    //};
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -149,7 +175,7 @@ public class HomeFragment extends Fragment {
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
+            mapFragment.getMapAsync(this);
         }
     }
 
@@ -199,4 +225,16 @@ public class HomeFragment extends Fragment {
     }
 
 
-}
+    @Override
+    public boolean onMyLocationButtonClick() {
+        Toast.makeText(requireContext(), "Moving to current location", Toast.LENGTH_SHORT)
+                .show();
+        return false;
+    }
+
+    @Override
+    public void onMyLocationClick(@NonNull Location location) {
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+    }
+        }
