@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -49,6 +48,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
     private Service service;
     private static String userEmail = LoginActivity.getEmail();
     private final ArrayList<LatLng> userCoordinates = LoginActivity.getCoordinates();
+    private static Location lastKnown;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -70,17 +70,12 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         return mapView;
     }
 
-    //private final OnMapReadyCallback callback = new OnMapReadyCallback() {
-
-
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
             mMap.setOnMyLocationButtonClickListener(this);
             mMap.setMyLocationEnabled(true);
             mMap.setOnMyLocationButtonClickListener(this);
-
-
 
             //Sets entire map padding, repositions location button but also repositions camera
             //mMap.setPadding(0,2100,0,0);
@@ -93,8 +88,6 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
             rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
             rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
             rlp.setMargins(0, 0, 30, 30);
-
-
 
             locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
@@ -127,6 +120,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
                 Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                lastKnown = lastKnownLocation;
 
                 LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
 
@@ -155,8 +149,6 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                 }
             }
 
-            //View myView = requireView().findViewById(android.R.id.content);
-
             MaterialEditText editSearch = requireView().findViewById(R.id.editText);
 
             editSearch.setOnEditorActionListener((v, actionId, event) -> {
@@ -167,7 +159,6 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                 return false;
             });
         }
-    //};
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -224,11 +215,13 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         startActivity(intent);
     }
 
+    public static Location getLastKnownLocation() {
+        return lastKnown;
+    }
+
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(requireContext(), "Moving to current location", Toast.LENGTH_SHORT)
-                .show();
         return false;
     }
 

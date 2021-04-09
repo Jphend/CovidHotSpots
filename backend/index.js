@@ -1,3 +1,4 @@
+const url = "mongodb+srv://jonwil:Hpkjw%4019@Cluster1.zyqmu.mongodb.net/covidhotspots?retryWrites=true&w=majority";
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -95,6 +96,25 @@ function checkHashPassword(userPassword, salt) {
 
     });
 
+    app.get('/showAll', (request, response) => {
+
+        // Location.distinct('lat').then(res => {
+        //     console.log(JSON.stringify(res));
+        //     response.send(JSON.stringify(res));
+        // }).catch(err => console.error(`Fatal error occurred: ${err}`));
+
+        Location.aggregate(
+            [
+                {$unwind: '$lat'},
+                {$unwind: '$lng'},
+                {$group: {_id:0, lat: {$addToSet: '$lat'}, lng: {$addToSet: '$lng'}}}
+            ]
+        ).then(res => {console.log(res); response.send(res);})
+        //console.log(result);
+        //response.send(result);
+
+    });
+
 
 
     app.post('/login', (request, response) => {
@@ -108,8 +128,7 @@ function checkHashPassword(userPassword, salt) {
                 console.log('Email does not exist, please register');
             } else {
                 User.findOne({'email': email}, function (err, user) {
-                    //const user1 = User.findOne({'email':email});
-                    //console.log(user1);
+
                     const salt = user.salt;
                     const hashedPassword = checkHashPassword(userPassword, salt).passwordHash;
                     const encryptedPassword = user.password;

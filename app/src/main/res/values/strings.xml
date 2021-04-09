@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">CovidHotSpots</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">HOME</string>
+    <string name="news">NEWS</string>
+    <string name="settings">SETTINGS</string>
+    <string name="logout">LOGOUT</string>
+    <string name="simulation">SIMULATION</string>
 
-    <string name="title_activity_maps">Map</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -29,22 +30,11 @@
     <string name="attachment_title">Download incoming attachments</string>
     <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="home">Home</string>
+
     <string name="email">Email</string>
     <string name="name">Name</string>
     <string name="password">Password</string>
-    <string name="settings_fragment">SETTINGS FRAGMENT</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_news">NewsActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="showAll">showAll</string>
 
-    <string name="news">News</string>
-    <string name="settings">Settings</string>
-    <string name="logout">LOGOUT</string>
+
 </resources>

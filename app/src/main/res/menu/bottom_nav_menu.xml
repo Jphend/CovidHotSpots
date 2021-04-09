@@ -8,6 +8,12 @@
             android:title="@string/title_home"/>
 
     <item
+            android:id="@+id/navigation_simulation"
+            android:icon="@drawable/ic_simulate"
+            android:textColor="@android:color/white"
+            android:title="@string/simulation"/>
+
+    <item
             android:id="@+id/navigation_news"
             android:icon="@drawable/ic_news"
             android:textColor="@android:color/white"

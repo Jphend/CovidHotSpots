@@ -14,12 +14,18 @@
     <fragment
             android:id="@+id/navigation_news"
             android:name="com.example.covidhotspots.ui.news.NewsFragment"
-            android:label="News"
+            android:label="@string/news"
             tools:layout="@layout/fragment_news"/>
 
     <fragment
             android:id="@+id/navigation_settings"
             android:name="com.example.covidhotspots.ui.settings.SettingsFragment"
-            android:label="Settings"
+            android:label="@string/settings"
             tools:layout="@layout/fragment_settings"/>
+
+    <fragment
+            android:id="@+id/navigation_simulation"
+            android:name="com.example.covidhotspots.ui.simulation.SimulationFragment"
+            android:label="@string/simulation"
+            tools:layout="@layout/fragment_simulation"/>
 </navigation>

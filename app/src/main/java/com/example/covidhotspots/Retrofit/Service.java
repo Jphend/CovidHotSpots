@@ -36,4 +36,7 @@ public interface Service {
     @GET("/")
     Observable<String> getLocations();
 
+    @GET("/showAll")
+    Observable<String> getAll();
+
 }
