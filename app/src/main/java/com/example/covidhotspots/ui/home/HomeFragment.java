@@ -39,7 +39,6 @@ import java.util.Objects;
 
 public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
 
-    //private HomeViewModel homeViewModel;
     private GoogleMap mMap;
     private View mapView;
     private LocationManager locationManager;
@@ -56,7 +55,9 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         if (requestCode == 1 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
+                mMap.setMyLocationEnabled(true);
+                mMap.setOnMyLocationButtonClickListener(this);
+                mMap.setOnMyLocationButtonClickListener(this);
             }
         }
     }
@@ -73,9 +74,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
-            mMap.setOnMyLocationButtonClickListener(this);
-            mMap.setMyLocationEnabled(true);
-            mMap.setOnMyLocationButtonClickListener(this);
+
 
             //Sets entire map padding, repositions location button but also repositions camera
             //mMap.setPadding(0,2100,0,0);
@@ -172,9 +171,6 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
     public void searchLocation() {
         MaterialEditText editSearch = requireView().findViewById(R.id.editText);
-
-
-
 
         String location = Objects.requireNonNull(editSearch.getText()).toString();
         List<Address> addressList = new ArrayList<>();

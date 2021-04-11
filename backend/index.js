@@ -98,11 +98,6 @@ function checkHashPassword(userPassword, salt) {
 
     app.get('/showAll', (request, response) => {
 
-        // Location.distinct('lat').then(res => {
-        //     console.log(JSON.stringify(res));
-        //     response.send(JSON.stringify(res));
-        // }).catch(err => console.error(`Fatal error occurred: ${err}`));
-
         Location.aggregate(
             [
                 {$unwind: '$lat'},
@@ -110,8 +105,6 @@ function checkHashPassword(userPassword, salt) {
                 {$group: {_id:0, lat: {$addToSet: '$lat'}, lng: {$addToSet: '$lng'}}}
             ]
         ).then(res => {console.log(res); response.send(res);})
-        //console.log(result);
-        //response.send(result);
 
     });
 
@@ -153,20 +146,15 @@ function checkHashPassword(userPassword, salt) {
         const lng = postData.lng;
 
 
-        //createLocationEntry(email, point);
-
         Location.findOne({'email': email}).countDocuments(function (err, number) {
             if (number === 0) {
                 response.json('No user location entries made yet');
                 console.log('No user location entries made yet');
                 createLocationEntry(email, lat, lng);
-                //createLocationEntry(email, latLng);
 
             } else {
-                //console.log(email);
-                //console.log(point);
+
                 addNewLocation(email, lat, lng);
-                //addNewLocation(email, latLng);
 
                 response.json('New user location added');
                 console.log('New user location added');

@@ -1,6 +1,11 @@
 package com.example.covidhotspots.ui.simulation;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.example.covidhotspots.R;
 import com.example.covidhotspots.Retrofit.RetrofitClient;
@@ -35,6 +42,8 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private Service service;
     private static final Location lastKnown = HomeFragment.getLastKnownLocation();
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,7 +70,48 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
             rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
             rlp.setMargins(0, 0, 30, 30);
 
-            locate();
+            //locate();
+
+            locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+
+            locationListener = new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+
+                    //mMap.clear();
+                    //mMap.addMarker(new MarkerOptions().position(userLocation).title("Your Location"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+                }
+
+                @Override
+                public void onProviderEnabled(String s) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String s) {
+
+                }
+
+            };
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            } else {
+                mMap.setMyLocationEnabled(true);
+
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                //lastKnown = lastKnownLocation;
+
+                LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+
+            }
+
+
 
             Button show = requireView().findViewById(R.id.showAllButton);
 
@@ -88,14 +138,14 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
                         }
                     })));
 
-            RadioButton button = requireView().findViewById(R.id.showAllButton);
+            //RadioButton button = requireView().findViewById(R.id.showAllButton);
 
 
             View.OnClickListener listener = v -> {
 
             };
 
-            button.setOnClickListener(listener);
+            //button.setOnClickListener(listener);
 
 
         }
