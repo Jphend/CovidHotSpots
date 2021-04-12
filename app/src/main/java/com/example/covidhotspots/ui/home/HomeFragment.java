@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,10 +27,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import retrofit2.Retrofit;
 
 import java.io.IOException;
@@ -45,9 +51,10 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
     private LocationListener locationListener;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private Service service;
-    private static String userEmail = LoginActivity.getEmail();
-    private final ArrayList<LatLng> userCoordinates = LoginActivity.getCoordinates();
+    private static final String userEmail = LoginActivity.getEmail();
+    private static final List<LatLng> userCoordinates = LoginActivity.getCoordinates();
     private static Location lastKnown;
+    private HeatmapTileProvider provider;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -58,6 +65,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                 mMap.setMyLocationEnabled(true);
                 mMap.setOnMyLocationButtonClickListener(this);
                 mMap.setOnMyLocationButtonClickListener(this);
+
             }
         }
     }
@@ -75,12 +83,11 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
 
-
             //Sets entire map padding, repositions location button but also repositions camera
             //mMap.setPadding(0,2100,0,0);
 
             //find location button
-            View locationButton = ((View) mapView.findViewById(1).getParent()).findViewById(2);
+            View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
 
             RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
             // Position button at bottom right
@@ -111,6 +118,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                 }
 
             };
+            //Check permissions, set user location and get last known location
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             } else {
@@ -125,8 +133,13 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
 
+                //System.out.println(userCoordinates.toString());
+
             }
+
+            //Add marker on map click
             mMap.setOnMapClickListener(point -> {
+
                 mMap.addMarker(new MarkerOptions().position(point));
 
                 double lat = point.latitude;
@@ -140,14 +153,44 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                             //Toast.makeText(MapsActivity.this, ""+response, Toast.LENGTH_LONG).show();
                         }));
             });
-
+            //Display all locations from array populated in Login Activity
             if(!userCoordinates.isEmpty()) {
                 for (LatLng coord : userCoordinates) {
                     mMap.addMarker(new MarkerOptions().position(coord));
                     //System.out.println(coord);
                 }
-            }
 
+            }
+            //Show my locations button
+            Button show = requireView().findViewById(R.id.showAllButton);
+
+            show.setOnClickListener((v) ->
+                    compositeDisposable.add(service.getLocations(userEmail)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(res -> {
+                        mMap.clear();
+                        JSONArray arr = new JSONArray(res);
+                        if(!(arr.isNull(0))) {
+                            JSONObject obj = arr.getJSONObject(0);
+                            String[] lngs = obj.getString("lng").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+                            String[] lats = obj.getString("lat").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+
+                            if (lats.length == lngs.length) {
+                                for (int i = 0; i < lats.length; i++) {
+                                    String lat = lats[i];
+                                    String lng = lngs[i];
+                                    double a = Double.parseDouble(lat);
+                                    double b = Double.parseDouble(lng);
+                                    LatLng latLng = new LatLng(a, b);
+                                    mMap.addMarker(new MarkerOptions().position(latLng));
+                                }
+                            }
+                        }
+
+                    })));
+
+            //Set listener on search bar so search method is called when used
             MaterialEditText editSearch = requireView().findViewById(R.id.editText);
 
             editSearch.setOnEditorActionListener((v, actionId, event) -> {
@@ -157,7 +200,25 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                 }
                 return false;
             });
+
+            Button heatmap = requireView().findViewById(R.id.heatmap);
+
+            heatmap.setOnClickListener(v -> addHeatMap());
+
         }
+
+    private void addHeatMap() {
+        // Create a heat map tile provider, passing it the latlngs of the police stations.
+        mMap.clear();
+        HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
+                .data(userCoordinates)
+                .build();
+
+        // Add a tile overlay to the map, using the heat map tile provider.
+        //overlay = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
+        //overlay.setVisible(true);
+        mMap.addTileOverlay(new TileOverlayOptions().tileProvider(provider)).setVisible(true);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -200,21 +261,9 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
     }
 
-    public void logout() {
-        userEmail = null;
-        openLoginPage();
-        //finish();
-    }
-
-    private void openLoginPage() {
-        Intent intent = new Intent(getContext(), LoginActivity.class);
-        startActivity(intent);
-    }
-
     public static Location getLastKnownLocation() {
         return lastKnown;
     }
-
 
     @Override
     public boolean onMyLocationButtonClick() {

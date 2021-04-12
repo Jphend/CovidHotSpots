@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
-
+    implementation 'com.google.maps.android:android-maps-utils:0.4.4'
 
 
 }

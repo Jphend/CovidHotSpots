@@ -23,19 +23,14 @@ import java.util.Objects;
 
 public class SettingsFragment extends Fragment {
 
-
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //onViewCreated();
-        return inflater.inflate(R.layout.fragment_settings, container, false);
-    }
-    
 
-    public void onViewCreated() {
-        Button loginButton = requireActivity().findViewById(R.id.logoutButton);
-        Intent intent = new Intent(requireContext(), Activity.class);
-        loginButton.setOnClickListener(v -> startActivity(intent));
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        Button logoutButton = view.findViewById(R.id.logoutButton);
+        Intent intent = new Intent(requireContext(), LoginActivity.class);
+        logoutButton.setOnClickListener(v -> startActivity(intent));
+        return view;
     }
 
 //    @Override

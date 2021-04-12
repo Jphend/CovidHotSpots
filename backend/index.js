@@ -36,14 +36,14 @@ async function addNewLocation(email, lat, lng) {
 
 }
 
-async function getLocations(email) {
-    app.get('/', async(req, result) => {
-        await Location.findOne({'email': email}, {lat: 1, lng: 1, _id: 0}).lean().then(res => {
-            console.log(JSON.stringify(res));
-            result.send(JSON.stringify(res));
-        }).catch(err => console.error(`Fatal error occurred: ${err}`));
-    })
-}
+// async function getLocations(email) {
+//     app.get('/', async(req, result) => {
+//         await Location.findOne({'email': email}, {lat: 1, lng: 1, _id: 0}).lean().then(res => {
+//             console.log(JSON.stringify(res));
+//             result.send(JSON.stringify(res));
+//         }).catch(err => console.error(`Fatal error occurred: ${err}`));
+//     })
+// }
 
 const genRandomString = function (length) {
     return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length)
@@ -79,7 +79,6 @@ function checkHashPassword(userPassword, salt) {
         const salt = hash_data.salt;
         const name = postData.name;
         const email = postData.email;
-        //console.log(email);
 
         User.find({'email': email}).countDocuments(function (err, number) {
             console.log(number);
@@ -96,8 +95,42 @@ function checkHashPassword(userPassword, salt) {
 
     });
 
-    app.get('/showAll', (request, response) => {
+    app.post('/', async(req, result) => {
+        const postData = req.body;
+        const email = postData.email;
 
+        Location.find({'email': email}, {lat: 1, lng: 1, _id: 0}).lean().then(res => {
+            console.log(JSON.stringify(res));
+            result.send(JSON.stringify(res));
+        }).catch(err => console.error(`Fatal error occurred: ${err}`));
+    })
+
+    app.post('/simulate', async(req, result) => {
+        const postData = req.body;
+        const lat = postData.lat;
+        const lng = postData.lng;
+
+        const rd = 2000 / 111300;
+
+        const u = Math.random();
+        const v = Math.random();
+
+        const w = rd * Math.sqrt(u);
+        const t = 2 * Math.PI * v;
+        const x = w * Math.cos(t);
+        const y = w * Math.sin(t);
+
+        const xp = x / Math.cos(lat);
+
+        const latitude = y + lat;
+        const longitude = xp + lng;
+
+        console.log(latitude);
+        console.log(longitude);
+
+    })
+
+    app.get('/showAll', (request, response) => {
         Location.aggregate(
             [
                 {$unwind: '$lat'},
@@ -105,10 +138,7 @@ function checkHashPassword(userPassword, salt) {
                 {$group: {_id:0, lat: {$addToSet: '$lat'}, lng: {$addToSet: '$lng'}}}
             ]
         ).then(res => {console.log(res); response.send(res);})
-
     });
-
-
 
     app.post('/login', (request, response) => {
         const postData = request.body;
@@ -121,14 +151,13 @@ function checkHashPassword(userPassword, salt) {
                 console.log('Email does not exist, please register');
             } else {
                 User.findOne({'email': email}, function (err, user) {
-
                     const salt = user.salt;
                     const hashedPassword = checkHashPassword(userPassword, salt).passwordHash;
                     const encryptedPassword = user.password;
                     if (hashedPassword === encryptedPassword) {
                         response.json('Login Success!');
                         console.log('Login Success!')
-                        getLocations(email);
+                        //getLocations(email);
                     }
                     else {
                         response.json('Login Fail, email or password is incorrect!');
@@ -145,7 +174,6 @@ function checkHashPassword(userPassword, salt) {
         const lat = postData.lat;
         const lng = postData.lng;
 
-
         Location.findOne({'email': email}).countDocuments(function (err, number) {
             if (number === 0) {
                 response.json('No user location entries made yet');
@@ -153,9 +181,7 @@ function checkHashPassword(userPassword, salt) {
                 createLocationEntry(email, lat, lng);
 
             } else {
-
                 addNewLocation(email, lat, lng);
-
                 response.json('New user location added');
                 console.log('New user location added');
             }

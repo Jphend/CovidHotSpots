@@ -15,14 +15,17 @@ import com.example.covidhotspots.Retrofit.RetrofitClient;
 import com.example.covidhotspots.Retrofit.Service;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import retrofit2.Retrofit;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
@@ -31,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private Service service;
     private static String userEmail;
-    private static ArrayList<LatLng> userCoordinates = new ArrayList<>();
+    private static List<LatLng> userCoordinates = new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         ArrayList<LatLng> coords = new ArrayList<>();
 
-        System.out.println(email);
+        //System.out.println(email);
 
         compositeDisposable.add(service.loginUser(email, password)
                 .subscribeOn(Schedulers.io())
@@ -112,30 +115,29 @@ public class LoginActivity extends AppCompatActivity {
                     if(response.contains("Success")) {
                         setEmail(email);
 
-                        compositeDisposable.add(service.getLocations()
+                        compositeDisposable.add(service.getAll()
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(res -> {
-                                        if(res.length() > 9) {
-                                            JSONObject obj = new JSONObject(res);
-                                            String[] lngs = obj.getString("lng").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
-                                            String[] lats = obj.getString("lat").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+                                    //Toast.makeText(MapsActivity.this, ""+response, Toast.LENGTH_LONG).show();
+                                    JSONArray arr = new JSONArray(res);
+                                    JSONObject obj = arr.getJSONObject(0);
+                                    String[] lngs = obj.getString("lng").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+                                    String[] lats = obj.getString("lat").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
 
-                                            if (lats.length == lngs.length) {
-                                                for (int i = 0; i < lats.length; i++) {
-                                                    String lat = lats[i];
-                                                    String lng = lngs[i];
-                                                    double a = Double.parseDouble(lat);
-                                                    double b = Double.parseDouble(lng);
-                                                    LatLng latLng = new LatLng(a, b);
-                                                    coords.add(latLng);
-                                                }
-                                            }
-                                            setCoordinates(coords);
-
-                                            }
+                                    if (lats.length == lngs.length) {
+                                        for (int i = 0; i < lats.length; i++) {
+                                            String lat = lats[i];
+                                            String lng = lngs[i];
+                                            double a = Double.parseDouble(lat);
+                                            double b = Double.parseDouble(lng);
+                                            LatLng latLng = new LatLng(a, b);
+                                            //mMap.addMarker(new MarkerOptions().position(latLng));
+                                            coords.add(latLng);
+                                        }
+                                    }
+                                    setCoordinates(coords);
                                     startActivity(intent);
-
                                 }));
 
 
@@ -175,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
         userCoordinates = coordinates;
     }
 
-    public static ArrayList<LatLng> getCoordinates() {
+    public static List<LatLng> getCoordinates() {
         return userCoordinates;
     }
 

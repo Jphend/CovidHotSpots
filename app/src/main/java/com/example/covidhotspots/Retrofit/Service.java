@@ -33,10 +33,15 @@ public interface Service {
                                          @Field("lat") double lat, @Field("lng") double lng);
                                          //@Field("coordinates") LatLng latLng);
 
-    @GET("/")
-    Observable<String> getLocations();
+    @POST("/")
+    @FormUrlEncoded
+    Observable<String> getLocations(@Field("email") String email);
 
     @GET("/showAll")
     Observable<String> getAll();
+
+    @POST("simulate")
+    @FormUrlEncoded
+    Observable<String> simulate(@Field("lat") double lat, @Field("lng") double lng);
 
 }
