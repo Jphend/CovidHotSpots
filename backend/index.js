@@ -68,6 +68,11 @@ function checkHashPassword(userPassword, salt) {
     return sha512(userPassword, salt);
 }
 
+function getRandomInRange(from, to, fixed) {
+    return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+    // .toFixed() returns string, so ' * 1' is a trick to convert to number
+}
+
 ;(async () => {
     await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
 
@@ -109,24 +114,18 @@ function checkHashPassword(userPassword, salt) {
         const postData = req.body;
         const lat = postData.lat;
         const lng = postData.lng;
+        var i = 0;
+        const coordinates = [];
+        while(i<50000) {
+            const latitude = getRandomInRange(-90, 90, 5);
+            const longitude = getRandomInRange(-180, 180, 5);
 
-        const rd = 2000 / 111300;
-
-        const u = Math.random();
-        const v = Math.random();
-
-        const w = rd * Math.sqrt(u);
-        const t = 2 * Math.PI * v;
-        const x = w * Math.cos(t);
-        const y = w * Math.sin(t);
-
-        const xp = x / Math.cos(lat);
-
-        const latitude = y + lat;
-        const longitude = xp + lng;
-
-        console.log(latitude);
-        console.log(longitude);
+            const latLng = new google.maps.LatLng(latitude, longitude);
+            coordinates.push(latLng);
+            i++;
+        }
+        console.log(coordinates);
+        result.send(coordinates);
 
     })
 

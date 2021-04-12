@@ -11,25 +11,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.Switch;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import com.example.covidhotspots.R;
 import com.example.covidhotspots.Retrofit.RetrofitClient;
 import com.example.covidhotspots.Retrofit.Service;
-import com.example.covidhotspots.ui.home.HomeFragment;
+import com.example.covidhotspots.SharedViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
+
+import java.util.ArrayList;
 
 public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
 
@@ -37,12 +41,18 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
     private View mapView;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private Service service;
-    //private static final Location lastKnown = HomeFragment.getLastKnownLocation();
+    private final ArrayList<LatLng> coordinates = new ArrayList<>();
+    private Switch heatmap;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         Retrofit retrofitClient = RetrofitClient.getInstance();
         service = retrofitClient.create(Service.class);
+
+        View settings = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        heatmap = settings.findViewById(R.id.displayHeatmap);
+
         mapView = inflater.inflate(R.layout.fragment_simulation, container, false);
         return mapView;
     }
@@ -60,8 +70,6 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
             rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
             rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
             rlp.setMargins(0, 0, 30, 30);
-
-            //locate();
 
             LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
@@ -93,6 +101,10 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
 
                 Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
+                LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+
 //                compositeDisposable.add(service.simulate(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude())
 //
 //                        .subscribeOn(Schedulers.io())
@@ -103,7 +115,38 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
 
             }
 
+
+
+            int i = 0;
+
+            while (i < 50000) {
+                double lat;
+                double lng;
+                lat = 50 + (Math.random() * (60 - 50));
+                lng = -5 + (Math.random() * (2 - -5));
+                LatLng latLng = new LatLng(lat, lng);
+                coordinates.add(latLng);
+                i++;
+            }
+
+            if (!coordinates.isEmpty()) {
+                for (LatLng coord : coordinates) {
+                    mMap.addMarker(new MarkerOptions().position(coord));
+                    //System.out.println(coord);
+                }
+                if(heatmap.isChecked()) {
+                    addHeatMap();
+                }
+            }
+
         }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        SharedViewModel sharedViewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel.getDisplayHeatmapSimulation().observe(getViewLifecycleOwner(), aBoolean -> heatmap.setChecked(aBoolean));
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -115,11 +158,13 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
         }
     }
 
-//    private void locate() {
-//        LatLng userLocation = new LatLng(SimulationFragment.lastKnown.getLatitude(), SimulationFragment.lastKnown.getLongitude());
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
-//    }
-
+    private void addHeatMap() {
+        mMap.clear();
+        HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
+                .data(coordinates)
+                .build();
+        mMap.addTileOverlay(new TileOverlayOptions().tileProvider(provider)).setVisible(true);
+    }
 
     @Override
     public boolean onMyLocationButtonClick() {

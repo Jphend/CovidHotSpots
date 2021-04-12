@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 public class NewsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
+    private LiveData liveData;
 
     public NewsViewModel() {
         mText = new MutableLiveData<>();

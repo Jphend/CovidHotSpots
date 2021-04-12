@@ -1,27 +1,27 @@
 package com.example.covidhotspots.ui.settings;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Switch;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.preference.PreferenceFragmentCompat;
-import com.example.covidhotspots.MainActivity;
 import com.example.covidhotspots.R;
-import com.example.covidhotspots.ui.home.HomeFragment;
+import com.example.covidhotspots.SharedViewModel;
 import com.example.covidhotspots.ui.login.LoginActivity;
 
-import java.util.Objects;
-
 public class SettingsFragment extends Fragment {
+
+    private SharedViewModel sharedViewModel;
+    private Switch heatmap;
+    private Switch heatmapSimulation;
+    private Switch displayAll;
+    private Switch displayMine;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,7 +30,38 @@ public class SettingsFragment extends Fragment {
         Button logoutButton = view.findViewById(R.id.logoutButton);
         Intent intent = new Intent(requireContext(), LoginActivity.class);
         logoutButton.setOnClickListener(v -> startActivity(intent));
+
+        heatmap = view.findViewById(R.id.displayHeatmap);
+
+        heatmap.setOnCheckedChangeListener((buttonView, isChecked) -> sharedViewModel.setDisplayHeatmap(isChecked));
+
+        heatmapSimulation = view.findViewById(R.id.displayHeatmapSimulation);
+
+        heatmapSimulation.setOnCheckedChangeListener((buttonView, isChecked) -> sharedViewModel.setDisplayHeatmapSimulation(isChecked));
+
+        displayAll = view.findViewById(R.id.displayAll);
+
+        displayAll.setOnCheckedChangeListener((buttonView, isChecked) -> sharedViewModel.setDisplayAll(isChecked));
+
+        displayMine = view.findViewById(R.id.displayMy);
+
+        displayMine.setOnCheckedChangeListener((buttonView, isChecked) -> sharedViewModel.setDisplayMine(isChecked));
+
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        sharedViewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel.getDisplayHeatmap().observe(getViewLifecycleOwner(), aBoolean -> heatmap.setChecked(aBoolean));
+
+        sharedViewModel.getDisplayHeatmapSimulation().observe(getViewLifecycleOwner(), aBoolean -> heatmapSimulation.setChecked(aBoolean));
+
+        sharedViewModel.getDisplayAll().observe(getViewLifecycleOwner(), aBoolean -> displayAll.setChecked(aBoolean));
+
+        sharedViewModel.getDisplayMine().observe(getViewLifecycleOwner(), aBoolean -> displayMine.setChecked(aBoolean));
+
     }
 
 //    @Override
