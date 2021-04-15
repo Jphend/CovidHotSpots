@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Switch;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.covidhotspots.R;
@@ -18,10 +18,10 @@ import com.example.covidhotspots.ui.login.LoginActivity;
 public class SettingsFragment extends Fragment {
 
     private SharedViewModel sharedViewModel;
-    private Switch heatmap;
-    private Switch heatmapSimulation;
-    private Switch displayAll;
-    private Switch displayMine;
+    private SwitchCompat heatmap;
+    private SwitchCompat heatmapSimulation;
+    private SwitchCompat displayAll;
+    private SwitchCompat displayMine;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,10 +63,5 @@ public class SettingsFragment extends Fragment {
         sharedViewModel.getDisplayMine().observe(getViewLifecycleOwner(), aBoolean -> displayMine.setChecked(aBoolean));
 
     }
-
-//    @Override
-//    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-//        setPreferencesFromResource(R.xml.root_preferences, rootKey);
-//    }
 
 }

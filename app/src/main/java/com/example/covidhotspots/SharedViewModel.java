@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel;
 
 public class SharedViewModel extends ViewModel {
 
-    private MutableLiveData<Boolean> displayHeatmap = new MutableLiveData<>();
-    private MutableLiveData<Boolean> displayHeatmapSimulation = new MutableLiveData<>();
-    private MutableLiveData<Boolean> displayAll = new MutableLiveData<>();
-    private MutableLiveData<Boolean> displayMine = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> displayHeatmap = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> displayHeatmapSimulation = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> displayAll = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> displayMine = new MutableLiveData<>();
 
     public SharedViewModel() {
 

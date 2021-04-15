@@ -6,27 +6,6 @@ const locationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-     // type: {
-     //     type: String,
-     //     enum: ['Point'],
-     //     required: true
-     // },
-      // coordinates: {
-      //     type: [],
-      //    required: true
-      // }
-    // coordinates:
-    //      {
-    //          type: [],
-    //          lat: {
-    //             type: [],
-    //             required: true
-    //          },
-    //          lng: {
-    //             type: [],
-    //             required: true
-    //          }
-    //     }
     lat: {
         type: [Number],
         required: true
@@ -36,8 +15,5 @@ const locationSchema = new mongoose.Schema({
         required: true
     },
 });
-
-//const jsonSchema = locationSchema.jsonSchema();
-//console.dir(jsonSchema, { depth: null });
 
 module.exports = locationSchema

@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -37,7 +37,6 @@ import io.reactivex.schedulers.Schedulers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import retrofit2.Retrofit;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +52,12 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
     private Service service;
     private static final String userEmail = LoginActivity.getEmail();
     private static final List<LatLng> userCoordinates = LoginActivity.getCoordinates();
-    private Switch heatmap;
-    private Switch displayAll;
-    private Switch displayMine;
+    private SwitchCompat heatmap;
+    private SwitchCompat displayAll;
+    private SwitchCompat displayMine;
 
-
+    //When user allows permission, location manager request location updates which later allows the camera to be moved to the user
+    //Also sets the user location to show up on the map and enables the location button
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -73,12 +73,12 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        // Initialise retrofit client and begin the API service
         Retrofit retrofitClient = RetrofitClient.getInstance();
         service = retrofitClient.create(Service.class);
-
+        //grab settings view so setting switches can be found
         View settings = inflater.inflate(R.layout.fragment_settings, container, false);
-
+        //initialise settings switches
         heatmap = settings.findViewById(R.id.displayHeatmap);
         displayAll = settings.findViewById(R.id.displayAll);
         displayMine = settings.findViewById(R.id.displayMy);
@@ -126,12 +126,11 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                 }
 
             };
+
             //Check permissions, set user location and get last known location
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             } else {
-                mMap.setMyLocationEnabled(true);
-
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
                 Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -158,6 +157,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                             //Toast.makeText(MapsActivity.this, ""+response, Toast.LENGTH_LONG).show();
                         }));
             });
+
             //Display all locations from array populated in Login Activity
             if(!userCoordinates.isEmpty()) {
                 if(displayAll.isChecked()) {
@@ -169,6 +169,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
             }
 
+            // if the display my locations setting is checked, display current user's location entries
             if(displayMine.isChecked()) {
                 compositeDisposable.add(service.getLocations(userEmail)
                         .subscribeOn(Schedulers.io())
@@ -207,6 +208,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                 return false;
             });
 
+            //if the heatmap setting is on, display heatmap
             if(heatmap.isChecked()) {
                 addHeatMap();
             }
@@ -214,6 +216,13 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         }
 
     @Override
+    public void onStop() {
+        compositeDisposable.clear();
+        super.onStop();
+    }
+
+    @Override
+    // Set ViewModel listener so that settings retain state
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         SharedViewModel sharedViewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
@@ -224,6 +233,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         sharedViewModel.getDisplayMine().observe(getViewLifecycleOwner(), aBoolean -> displayMine.setChecked(aBoolean));
     }
 
+    //Create heat map
     private void addHeatMap() {
         mMap.clear();
         HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
@@ -233,6 +243,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
     }
 
     @Override
+    //Generated code to manage the map
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment =
@@ -242,6 +253,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         }
     }
 
+    //Search a user entered location
     public void searchLocation() {
         MaterialEditText editSearch = requireView().findViewById(R.id.editText);
 
@@ -274,11 +286,13 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
     }
 
     @Override
+    //Manage the location button click
     public boolean onMyLocationButtonClick() {
         return false;
     }
 
     @Override
+    // Get current location when location button clicked
     public void onMyLocationClick(@NonNull Location location) {
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));

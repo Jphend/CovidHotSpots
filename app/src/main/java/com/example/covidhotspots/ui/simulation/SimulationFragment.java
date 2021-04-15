@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -42,7 +42,7 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private Service service;
     private final ArrayList<LatLng> coordinates = new ArrayList<>();
-    private Switch heatmap;
+    private SwitchCompat heatmap;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -140,6 +140,12 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
             }
 
         }
+
+    @Override
+    public void onStop() {
+        compositeDisposable.clear();
+        super.onStop();
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

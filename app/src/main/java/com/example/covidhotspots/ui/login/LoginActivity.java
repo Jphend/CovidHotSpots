@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(v -> loginUser(Objects.requireNonNull(editEmail.getText()).toString(), Objects.requireNonNull(editPassword.getText()).toString()));
 
+        // When create account text is clicked, open up pop up menu allowing user to enter details
         TextView createAccount = findViewById(R.id.createAccount);
         createAccount.setOnClickListener(view -> {
             View register_layout = LayoutInflater.from(LoginActivity.this)
@@ -81,9 +82,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Password cannot be empty", Toast.LENGTH_LONG).show();
                             return;
                         }
-
-                        //Toast.makeText(LoginActivity.this, editRegisterEmail.getText().toString(), Toast.LENGTH_LONG).show();
-
                         registerUser(editRegisterEmail.getText().toString(), editRegisterName.getText().toString(), editRegisterPassword.getText().toString());
                     }).show();
         });
@@ -101,11 +99,13 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        //Intent allows for navigation to the new activity that is declared
         Intent intent = new Intent(this, MainActivity.class);
         ArrayList<LatLng> coords = new ArrayList<>();
 
         //System.out.println(email);
 
+        //API call to log user in
         compositeDisposable.add(service.loginUser(email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -119,11 +119,14 @@ public class LoginActivity extends AppCompatActivity {
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(res -> {
                                     //Toast.makeText(MapsActivity.this, ""+response, Toast.LENGTH_LONG).show();
+
+                                    //Parse result into, 1st a JSON array, 2nd a JSON object
                                     JSONArray arr = new JSONArray(res);
                                     JSONObject obj = arr.getJSONObject(0);
                                     String[] lngs = obj.getString("lng").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
                                     String[] lats = obj.getString("lat").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
 
+                                    //if lats and lngs arrays are the same size (should always be true)
                                     if (lats.length == lngs.length) {
                                         for (int i = 0; i < lats.length; i++) {
                                             String lat = lats[i];
@@ -138,14 +141,11 @@ public class LoginActivity extends AppCompatActivity {
                                     setCoordinates(coords);
                                     startActivity(intent);
                                 }));
-
-
                     }
                     else {
                         Toast.makeText(LoginActivity.this, "Login failed, try again", Toast.LENGTH_LONG).show();
                     }
-
-                    //finish();
+                    finish();
                 }));
     }
 
@@ -155,8 +155,6 @@ public class LoginActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> Toast.makeText(LoginActivity.this, ""+response, Toast.LENGTH_LONG).show()));
     }
-
-
 
     @Override
     protected void onStop() {

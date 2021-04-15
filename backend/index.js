@@ -129,6 +129,7 @@ function getRandomInRange(from, to, fixed) {
 
     })
 
+
     app.get('/showAll', (request, response) => {
         Location.aggregate(
             [
@@ -136,8 +137,12 @@ function getRandomInRange(from, to, fixed) {
                 {$unwind: '$lng'},
                 {$group: {_id:0, lat: {$addToSet: '$lat'}, lng: {$addToSet: '$lng'}}}
             ]
-        ).then(res => {console.log(res); response.send(res);})
+        ).then(res => {response.send(res);})
     });
+
+    // app.get('/showAll', (request, response) => {
+    //     Location.find( {}, { lat: 1, lng: 1 } ).then(res => {console.log(res);response.send(res);})
+    // });
 
     app.post('/login', (request, response) => {
         const postData = request.body;
@@ -156,7 +161,6 @@ function getRandomInRange(from, to, fixed) {
                     if (hashedPassword === encryptedPassword) {
                         response.json('Login Success!');
                         console.log('Login Success!')
-                        //getLocations(email);
                     }
                     else {
                         response.json('Login Fail, email or password is incorrect!');
@@ -178,7 +182,6 @@ function getRandomInRange(from, to, fixed) {
                 response.json('No user location entries made yet');
                 console.log('No user location entries made yet');
                 createLocationEntry(email, lat, lng);
-
             } else {
                 addNewLocation(email, lat, lng);
                 response.json('New user location added');
@@ -190,10 +193,8 @@ function getRandomInRange(from, to, fixed) {
     app.post('/searchLocation', (request, response) => {
         const postData = request.body;
         const email = postData.email;
-        //const latLng = postData.coordinates;
         const lat = postData.lat;
         const lng = postData.lng;
-        //createLocationEntry(email, point);
 
         Location.findOne({'email': email}).countDocuments(function (err, number) {
             if (number === 0) {
@@ -201,8 +202,6 @@ function getRandomInRange(from, to, fixed) {
                 console.log('No user location entries made yet');
                 createLocationEntry(email, lat, lng);
             } else {
-                //console.log(email);
-                //console.log(point);
                 addNewLocation(email, lat, lng);
                 response.json('New user location added');
                 console.log('New user location added');

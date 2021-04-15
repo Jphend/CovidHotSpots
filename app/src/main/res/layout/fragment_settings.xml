@@ -9,7 +9,7 @@
 
 
     <TextView
-            android:text="Home"
+            android:text="@string/home"
             android:layout_width="376dp"
             android:textColor="#431F63"
             android:textSize="20sp"
@@ -19,16 +19,16 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.485"
             app:layout_constraintVertical_bias="0.026"/>
-    <Switch
-            android:text="Display Heat Map"
+    <androidx.appcompat.widget.SwitchCompat
+            android:text="@string/display_heat_map"
             android:layout_width="376dp"
             android:layout_height="50dp" android:id="@+id/displayHeatmapSimulation"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.485" app:layout_constraintVertical_bias="0.396"/>
-    <Switch
-            android:text="Display All Locations"
+    <androidx.appcompat.widget.SwitchCompat
+            android:text="@string/display_all_locations"
             android:layout_width="376dp"
             android:layout_height="50dp" android:id="@+id/displayAll"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -36,16 +36,16 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.485"
             app:layout_constraintVertical_bias="0.086"/>
-    <Switch
-            android:text="Display My Locations"
+    <androidx.appcompat.widget.SwitchCompat
+            android:text="@string/display_my_locations"
             android:layout_width="376dp"
             android:layout_height="50dp" android:id="@+id/displayMy"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.485"
             app:layout_constraintVertical_bias="0.16"/>
-    <Switch
-            android:text="Display Heat Map"
+    <androidx.appcompat.widget.SwitchCompat
+            android:text="@string/display_heat_map"
             android:layout_width="376dp"
             android:layout_height="50dp" android:id="@+id/displayHeatmap"
             app:layout_constraintTop_toTopOf="parent"
@@ -54,7 +54,7 @@
             app:layout_constraintHorizontal_bias="0.485" app:layout_constraintVertical_bias="0.232"/>
 
     <TextView
-            android:text="Simulation"
+            android:text="@string/simulationSwitch"
             android:layout_width="376dp"
             android:textColor="#431F63"
             android:textSize="20sp"
@@ -78,7 +78,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.157"
             app:layout_constraintVertical_bias="0.957"
-
             android:drawableEnd="@drawable/ic_logout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
