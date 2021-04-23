@@ -19,6 +19,8 @@ public class SettingsFragment extends Fragment {
 
     private SharedViewModel sharedViewModel;
     private SwitchCompat heatmap;
+
+
     private SwitchCompat heatmapSimulation;
     private SwitchCompat displayAll;
     private SwitchCompat displayMine;

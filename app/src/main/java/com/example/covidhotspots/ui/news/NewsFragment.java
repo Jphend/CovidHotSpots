@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -18,10 +17,7 @@ import com.example.covidhotspots.R;
 import com.example.covidhotspots.SharedViewModel;
 import com.prof.rssparser.Article;
 import com.prof.rssparser.Parser;
-
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class NewsFragment extends Fragment {
 

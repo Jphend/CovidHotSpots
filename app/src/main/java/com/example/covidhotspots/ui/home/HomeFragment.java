@@ -43,33 +43,19 @@ import java.util.List;
 import java.util.Objects;
 
 public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
-
     private GoogleMap mMap;
     private View mapView;
     private LocationManager locationManager;
     private LocationListener locationListener;
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private Service service;
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private static final String userEmail = LoginActivity.getEmail();
-    private static final List<LatLng> userCoordinates = LoginActivity.getCoordinates();
+
+    private final List<LatLng> userCoordinates = new ArrayList<>();
+
     private SwitchCompat heatmap;
     private SwitchCompat displayAll;
     private SwitchCompat displayMine;
-
-    //When user allows permission, location manager request location updates which later allows the camera to be moved to the user
-    //Also sets the user location to show up on the map and enables the location button
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                mMap.setMyLocationEnabled(true);
-                mMap.setOnMyLocationButtonClickListener(this);
-                mMap.setOnMyLocationButtonClickListener(this);
-            }
-        }
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,9 +73,24 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         return mapView;
     }
 
+    //When user allows permission, location manager request location updates which later allows the camera to be moved to the user
+    //Also sets the user location to show up on the map and enables the location button
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                mMap.setMyLocationEnabled(true);
+            }
+        }
+    }
+
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
+            mMap.setOnMyLocationButtonClickListener(this);
+            mMap.setOnMyLocationButtonClickListener(this);
 
             //Sets entire map padding, repositions location button but also repositions camera
             //mMap.setPadding(0,2100,0,0);
@@ -105,69 +106,70 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
             locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
-            locationListener = new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-                    LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            locationListener = location -> {
+                LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
-                    //mMap.clear();
-                    //mMap.addMarker(new MarkerOptions().position(userLocation).title("Your Location"));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
-                }
-
-                @Override
-                public void onProviderEnabled(String s) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String s) {
-
-                }
-
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
             };
 
-            //Check permissions, set user location and get last known location
+            //Check permissions, set user location and get last known location, enables location features
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             } else {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
+                mMap.setMyLocationEnabled(true);
                 Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
                 LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
 
             }
 
             //Add marker on map click
             mMap.setOnMapClickListener(point -> {
-
+                //Add a marker to the map
                 mMap.addMarker(new MarkerOptions().position(point));
-
+                //get the latitude and longitude of the marker
                 double lat = point.latitude;
                 double lng = point.longitude;
-
+                // pass the latitude and longitude to the backend save click location function found in index.js
                 compositeDisposable.add(service.saveClickLocation(userEmail, lat ,lng)
-
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(response -> {
-                            //Toast.makeText(MapsActivity.this, ""+response, Toast.LENGTH_LONG).show();
+
                         }));
             });
 
             //Display all locations from array populated in Login Activity
-            if(!userCoordinates.isEmpty()) {
                 if(displayAll.isChecked()) {
-                    for (LatLng coord : userCoordinates) {
-                        mMap.addMarker(new MarkerOptions().position(coord));
-                        //System.out.println(coord);
-                    }
+                    compositeDisposable.add(service.getAll()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(res -> {
+                                //Parse result into, 1st a JSON array, 2nd a JSON object
+                                JSONArray arr = new JSONArray(res);
+                                JSONObject obj = arr.getJSONObject(0);
+                                String[] lngs = obj.getString("lng").replaceAll("\\[", "")
+                                        .replaceAll("\\]", "").split(",");
+                                String[] lats = obj.getString("lat").replaceAll("\\[", "")
+                                        .replaceAll("\\]", "").split(",");
+
+                                //if lats and lngs arrays are the same size (should always be true)
+                                if (lats.length == lngs.length) {
+                                    userCoordinates.clear();
+                                    for (int i = 0; i < lats.length; i++) {
+                                        String lat = lats[i];
+                                        String lng = lngs[i];
+                                        double a = Double.parseDouble(lat);
+                                        double b = Double.parseDouble(lng);
+                                        LatLng latLng = new LatLng(a, b);
+                                        mMap.addMarker(new MarkerOptions().position(latLng));
+                                        userCoordinates.add(latLng);
+                                    }
+                                }
+                            }));
                 }
 
-            }
 
             // if the display my locations setting is checked, display current user's location entries
             if(displayMine.isChecked()) {
@@ -183,6 +185,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                                 String[] lats = obj.getString("lat").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
 
                                 if (lats.length == lngs.length) {
+                                    userCoordinates.clear();
                                     for (int i = 0; i < lats.length; i++) {
                                         String lat = lats[i];
                                         String lng = lngs[i];
@@ -190,6 +193,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                                         double b = Double.parseDouble(lng);
                                         LatLng latLng = new LatLng(a, b);
                                         mMap.addMarker(new MarkerOptions().position(latLng));
+                                        userCoordinates.add(latLng);
                                     }
                                 }
                             }
@@ -199,7 +203,6 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
             //Set listener on search bar so search method is called when used
             MaterialEditText editSearch = requireView().findViewById(R.id.editText);
-
             editSearch.setOnEditorActionListener((v, actionId, event) -> {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     searchLocation();
@@ -212,7 +215,6 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
             if(heatmap.isChecked()) {
                 addHeatMap();
             }
-
         }
 
     @Override
@@ -255,11 +257,13 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
     //Search a user entered location
     public void searchLocation() {
+        //find search bar layout
         MaterialEditText editSearch = requireView().findViewById(R.id.editText);
-
+        //assign entry in seach bar to a string
         String location = Objects.requireNonNull(editSearch.getText()).toString();
+        //create an array of addresses
         List<Address> addressList = new ArrayList<>();
-
+        //Create a geocoder that will find the geolocation from an address and add it to the list
         Geocoder geocoder = new Geocoder(getContext());
         try {
             addressList = geocoder.getFromLocationName(location, 1);
@@ -267,15 +271,18 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //as long as address is not null assign the first result from the address list as an address
         assert addressList != null;
         Address address = addressList.get(0);
+        //Get the lat/lng values from the address
         LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-        double lat = address.getLatitude();
-        double lng = address.getLatitude();
 
+        //add a map marker at the given location and move the map to be centred on the location
         mMap.addMarker(new MarkerOptions().position(latLng).title(location));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
+        double lat = address.getLatitude();
+        double lng = address.getLatitude();
         compositeDisposable.add(service.saveSearchLocation(userEmail, lat, lng)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -297,4 +304,4 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
     }
-        }
+}

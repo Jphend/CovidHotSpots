@@ -1,15 +1,17 @@
 const url = "mongodb+srv://jonwil:Hpkjw%4019@Cluster1.zyqmu.mongodb.net/covidhotspots?retryWrites=true&w=majority";
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}))
-const crypto = require('crypto');
 const mongoose = require('mongoose');
 const userSchema = require('./userSchema.js');
 const locationSchema = require('./locationSchema.js');
 const User = mongoose.model('users', userSchema, 'users');
 const Location = mongoose.model('locations', locationSchema, 'locations');
+
+const crypto = require('crypto');
+
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}))
 
 async function createUser(email, name, password, salt) {
     return new User({
@@ -36,15 +38,6 @@ async function addNewLocation(email, lat, lng) {
 
 }
 
-// async function getLocations(email) {
-//     app.get('/', async(req, result) => {
-//         await Location.findOne({'email': email}, {lat: 1, lng: 1, _id: 0}).lean().then(res => {
-//             console.log(JSON.stringify(res));
-//             result.send(JSON.stringify(res));
-//         }).catch(err => console.error(`Fatal error occurred: ${err}`));
-//     })
-// }
-
 const genRandomString = function (length) {
     return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length)
 };
@@ -68,11 +61,6 @@ function checkHashPassword(userPassword, salt) {
     return sha512(userPassword, salt);
 }
 
-function getRandomInRange(from, to, fixed) {
-    return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
-    // .toFixed() returns string, so ' * 1' is a trick to convert to number
-}
-
 ;(async () => {
     await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
 
@@ -91,7 +79,6 @@ function getRandomInRange(from, to, fixed) {
                 response.json('Email already exists');
                 console.log('Email already exists');
             } else {
-                    //User.create({email: email, password: plainTextPassword}, function (err, doc) { console.log(err); });
                     createUser(email, name, password, salt);
                     response.json('Registration successful');
                     console.log('Registration successful');
@@ -110,26 +97,6 @@ function getRandomInRange(from, to, fixed) {
         }).catch(err => console.error(`Fatal error occurred: ${err}`));
     })
 
-    app.post('/simulate', async(req, result) => {
-        const postData = req.body;
-        const lat = postData.lat;
-        const lng = postData.lng;
-        var i = 0;
-        const coordinates = [];
-        while(i<50000) {
-            const latitude = getRandomInRange(-90, 90, 5);
-            const longitude = getRandomInRange(-180, 180, 5);
-
-            const latLng = new google.maps.LatLng(latitude, longitude);
-            coordinates.push(latLng);
-            i++;
-        }
-        console.log(coordinates);
-        result.send(coordinates);
-
-    })
-
-
     app.get('/showAll', (request, response) => {
         Location.aggregate(
             [
@@ -139,10 +106,6 @@ function getRandomInRange(from, to, fixed) {
             ]
         ).then(res => {response.send(res);})
     });
-
-    // app.get('/showAll', (request, response) => {
-    //     Location.find( {}, { lat: 1, lng: 1 } ).then(res => {console.log(res);response.send(res);})
-    // });
 
     app.post('/login', (request, response) => {
         const postData = request.body;
@@ -213,5 +176,4 @@ function getRandomInRange(from, to, fixed) {
         console.log('Connected to mongodb!');
     })
 
-    //process.exit(0)
 })()

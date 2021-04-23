@@ -19,46 +19,38 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.covidhotspots.R;
-import com.example.covidhotspots.Retrofit.RetrofitClient;
-import com.example.covidhotspots.Retrofit.Service;
 import com.example.covidhotspots.SharedViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.android.gms.maps.model.*;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
-import io.reactivex.disposables.CompositeDisposable;
-import retrofit2.Retrofit;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     private View mapView;
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private Service service;
     private final ArrayList<LatLng> coordinates = new ArrayList<>();
     private SwitchCompat heatmap;
+    private final List<Marker> markers = new ArrayList<>();
+    private Marker marker;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Retrofit retrofitClient = RetrofitClient.getInstance();
-        service = retrofitClient.create(Service.class);
 
         View settings = inflater.inflate(R.layout.fragment_settings, container, false);
-
         heatmap = settings.findViewById(R.id.displayHeatmap);
 
         mapView = inflater.inflate(R.layout.fragment_simulation, container, false);
         return mapView;
     }
 
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
             mMap.setOnMyLocationButtonClickListener(this);
             mMap.setOnMyLocationButtonClickListener(this);
@@ -73,24 +65,17 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
 
             LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
-            LocationListener locationListener = new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-                    LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            LocationListener locationListener = location -> {
+                LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
+                //Get the bounds of the current screen
+                LatLngBounds curScreen = googleMap.getProjection()
+                        .getVisibleRegion().latLngBounds;
+                //loop through the marker list and if the current screen contains the marker position, make the marker visible
+                for(Marker mar : markers) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+                    marker.setVisible(curScreen.contains(mar.getPosition()));
                 }
-
-                @Override
-                public void onProviderEnabled(String s) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String s) {
-
-                }
-
             };
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -105,47 +90,36 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
 
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
 
-//                compositeDisposable.add(service.simulate(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude())
-//
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(response -> {
-//                            Toast.makeText(requireContext(), ""+response, Toast.LENGTH_LONG).show();
-//                        }));
-
             }
 
 
+            //Random number in between 50,000 to 100,000
+            //int num = (int) (Math.random() * (100000 - 50000)) + 50000;
+            //Toast.makeText(requireContext(), "Adding " + num + " Markers to map", Toast.LENGTH_LONG).show();
 
-            int i = 0;
 
-            while (i < 50000) {
-                double lat;
-                double lng;
-                lat = 50 + (Math.random() * (60 - 50));
-                lng = -5 + (Math.random() * (2 - -5));
+            for(int i = 0; i<50000; i++) {
+                //Roughly the latitudes and longitudes of the UK
+                double lat = 50 + (Math.random() * (60 - 50));
+                double lng = -5 + (Math.random() * (2 - -5));
                 LatLng latLng = new LatLng(lat, lng);
                 coordinates.add(latLng);
                 i++;
             }
 
+            //If the array coordinates is not empty, loop through it and add a marker to another array list
             if (!coordinates.isEmpty()) {
                 for (LatLng coord : coordinates) {
-                    mMap.addMarker(new MarkerOptions().position(coord));
+                    marker = mMap.addMarker(new MarkerOptions().position(coord));
+                    markers.add(marker);
                     //System.out.println(coord);
                 }
+                //if the heatmap setting is checked, add the overlay
                 if(heatmap.isChecked()) {
                     addHeatMap();
                 }
             }
-
         }
-
-    @Override
-    public void onStop() {
-        compositeDisposable.clear();
-        super.onStop();
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
