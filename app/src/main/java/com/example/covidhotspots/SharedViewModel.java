@@ -20,7 +20,6 @@ public class SharedViewModel extends ViewModel {
     public void setDisplayHeatmap(Boolean val) {
         displayHeatmap.setValue(val);
     }
-
     public LiveData<Boolean> getDisplayHeatmap() {
         return displayHeatmap;
     }

@@ -104,7 +104,7 @@ function checkHashPassword(userPassword, salt) {
                 {$unwind: '$lng'},
                 {$group: {_id:0, lat: {$addToSet: '$lat'}, lng: {$addToSet: '$lng'}}}
             ]
-        ).then(res => {response.send(res);})
+        ).then(res => {console.log(res); response.send(res);})
     });
 
     app.post('/login', (request, response) => {

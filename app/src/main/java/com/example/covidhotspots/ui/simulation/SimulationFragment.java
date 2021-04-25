@@ -17,6 +17,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.covidhotspots.R;
 import com.example.covidhotspots.SharedViewModel;
@@ -69,7 +70,7 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
                 //Get the bounds of the current screen
-                LatLngBounds curScreen = googleMap.getProjection()
+                LatLngBounds curScreen = mMap.getProjection()
                         .getVisibleRegion().latLngBounds;
                 //loop through the marker list and if the current screen contains the marker position, make the marker visible
                 for(Marker mar : markers) {
@@ -124,7 +125,7 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        SharedViewModel sharedViewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
+        SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getDisplayHeatmapSimulation().observe(getViewLifecycleOwner(), aBoolean -> heatmap.setChecked(aBoolean));
     }
 

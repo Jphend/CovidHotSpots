@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.covidhotspots.R;
 import com.example.covidhotspots.SharedViewModel;
@@ -34,12 +35,11 @@ public class SettingsFragment extends Fragment {
         logoutButton.setOnClickListener(v -> startActivity(intent));
 
         heatmap = view.findViewById(R.id.displayHeatmap);
-
-        heatmap.setOnCheckedChangeListener((buttonView, isChecked) -> sharedViewModel.setDisplayHeatmap(isChecked));
+        heatmap.setOnCheckedChangeListener((v, isChecked) -> sharedViewModel.setDisplayHeatmap(isChecked));
 
         heatmapSimulation = view.findViewById(R.id.displayHeatmapSimulation);
 
-        heatmapSimulation.setOnCheckedChangeListener((buttonView, isChecked) -> sharedViewModel.setDisplayHeatmapSimulation(isChecked));
+        heatmapSimulation.setOnCheckedChangeListener((v, isChecked) -> sharedViewModel.setDisplayHeatmapSimulation(isChecked));
 
         displayAll = view.findViewById(R.id.displayAll);
 
@@ -55,7 +55,8 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        sharedViewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
+
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getDisplayHeatmap().observe(getViewLifecycleOwner(), aBoolean -> heatmap.setChecked(aBoolean));
 
         sharedViewModel.getDisplayHeatmapSimulation().observe(getViewLifecycleOwner(), aBoolean -> heatmapSimulation.setChecked(aBoolean));

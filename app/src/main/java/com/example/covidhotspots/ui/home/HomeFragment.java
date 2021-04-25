@@ -16,6 +16,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.covidhotspots.R;
 import com.example.covidhotspots.Retrofit.RetrofitClient;
@@ -38,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import retrofit2.Retrofit;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -51,7 +53,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private static final String userEmail = LoginActivity.getEmail();
 
-    private final List<LatLng> userCoordinates = new ArrayList<>();
+    private final ArrayList<LatLng> allCoordinates = new ArrayList<>();
 
     private SwitchCompat heatmap;
     private SwitchCompat displayAll;
@@ -68,6 +70,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         heatmap = settings.findViewById(R.id.displayHeatmap);
         displayAll = settings.findViewById(R.id.displayAll);
         displayMine = settings.findViewById(R.id.displayMy);
+
 
         mapView = inflater.inflate(R.layout.fragment_home, container, false);
         return mapView;
@@ -140,7 +143,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                         }));
             });
 
-            //Display all locations from array populated in Login Activity
+            //Display all locations
                 if(displayAll.isChecked()) {
                     compositeDisposable.add(service.getAll()
                             .subscribeOn(Schedulers.io())
@@ -156,7 +159,6 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
                                 //if lats and lngs arrays are the same size (should always be true)
                                 if (lats.length == lngs.length) {
-                                    userCoordinates.clear();
                                     for (int i = 0; i < lats.length; i++) {
                                         String lat = lats[i];
                                         String lng = lngs[i];
@@ -164,7 +166,9 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                                         double b = Double.parseDouble(lng);
                                         LatLng latLng = new LatLng(a, b);
                                         mMap.addMarker(new MarkerOptions().position(latLng));
-                                        userCoordinates.add(latLng);
+                                        allCoordinates.add(latLng);
+                                        System.out.println(allCoordinates);
+
                                     }
                                 }
                             }));
@@ -185,7 +189,6 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                                 String[] lats = obj.getString("lat").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
 
                                 if (lats.length == lngs.length) {
-                                    userCoordinates.clear();
                                     for (int i = 0; i < lats.length; i++) {
                                         String lat = lats[i];
                                         String lng = lngs[i];
@@ -193,7 +196,6 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                                         double b = Double.parseDouble(lng);
                                         LatLng latLng = new LatLng(a, b);
                                         mMap.addMarker(new MarkerOptions().position(latLng));
-                                        userCoordinates.add(latLng);
                                     }
                                 }
                             }
@@ -227,7 +229,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
     // Set ViewModel listener so that settings retain state
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        SharedViewModel sharedViewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
+        SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getDisplayHeatmap().observe(getViewLifecycleOwner(), aBoolean -> heatmap.setChecked(aBoolean));
 
         sharedViewModel.getDisplayAll().observe(getViewLifecycleOwner(), aBoolean -> displayAll.setChecked(aBoolean));
@@ -239,7 +241,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
     private void addHeatMap() {
         mMap.clear();
         HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
-                .data(userCoordinates)
+                .data(allCoordinates)
                 .build();
         mMap.addTileOverlay(new TileOverlayOptions().tileProvider(provider)).setVisible(true);
     }
