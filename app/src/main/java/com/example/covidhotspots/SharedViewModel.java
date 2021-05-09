@@ -13,6 +13,8 @@ public class SharedViewModel extends ViewModel {
     private final MutableLiveData<Boolean> displayAll = new MutableLiveData<>();
     private final MutableLiveData<Boolean> displayMine = new MutableLiveData<>();
 
+    private final MutableLiveData<Boolean> displayWelcome = new MutableLiveData<>();
+
     public SharedViewModel() {
 
     }

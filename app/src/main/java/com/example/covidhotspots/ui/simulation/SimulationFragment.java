@@ -88,24 +88,7 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
 
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
-                FusedLocationProviderClient myProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
-                try {
-                    Task<Location> location = myProviderClient.getLastLocation();
-                    location.addOnCompleteListener(task -> {
-                        if(task.isSuccessful()) {
-                            Location currentLocation = task.getResult();
-                            LatLng userLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
-                        }
-                        else{
-                            System.out.println("fail");
-                        }
-                    });
-                }
-                catch (SecurityException e) {
-                    System.out.println(e.getMessage());
-                }
+                locate();
 
             }
 
@@ -137,6 +120,27 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
                 }
             }
         }
+
+    private void locate() {
+        FusedLocationProviderClient myProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
+        try {
+            Task<Location> location = myProviderClient.getLastLocation();
+            location.addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    Location currentLocation = task.getResult();
+                    LatLng userLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+                }
+                else{
+                    System.out.println("fail");
+                }
+            });
+        }
+        catch (SecurityException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

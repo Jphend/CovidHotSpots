@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
@@ -46,10 +45,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
     private GoogleMap mMap;
     private View mapView;
+    private View welcome_layout;
     private LocationManager locationManager;
     private LocationListener locationListener;
     private Service service;
@@ -76,21 +77,8 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
         mapView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        View welcome_layout = LayoutInflater.from(requireContext())
+        welcome_layout = LayoutInflater.from(requireContext())
                 .inflate(R.layout.welcome_layout, null);
-
-        new MaterialStyledDialog.Builder(requireContext())
-                .setIcon(R.drawable.ic_simulate)
-                .setTitle("WELCOME")
-                .setCustomView(welcome_layout)
-                .onNegative((dialog, which) -> dialog.dismiss())
-                .setPositiveText("OK")
-                .onPositive((dialog, which) -> {
-                            TextView welcomeText = welcome_layout.findViewById(R.id.welcome);
-
-                }).show();
-
-
 
         return mapView;
     }
@@ -104,11 +92,44 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 mMap.setMyLocationEnabled(true);
+                locate();
+
+                new MaterialStyledDialog.Builder(requireContext())
+                        .setIcon(R.drawable.ic_simulate)
+                        .setTitle("WELCOME")
+                        .setCustomView(welcome_layout)
+                        .onNegative((dialog, which) -> dialog.dismiss())
+                        .setPositiveText("OK")
+                        .onPositive((dialog, which) -> {
+
+                        }).show();
+
             }
         }
     }
 
-        @Override
+    private void locate() {
+        FusedLocationProviderClient myProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
+        try {
+            Task<Location> location = myProviderClient.getLastLocation();
+            location.addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    Location currentLocation = task.getResult();
+                    LatLng userLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+                }
+                else{
+                    System.out.println("fail");
+                }
+            });
+        }
+        catch (SecurityException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
         public void onMapReady(@NonNull GoogleMap googleMap) {
             mMap = googleMap;
             mMap.setOnMyLocationButtonClickListener(this);
@@ -141,25 +162,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 //Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 //LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-
-                FusedLocationProviderClient myProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
-                try {
-                    Task<Location> location = myProviderClient.getLastLocation();
-                    location.addOnCompleteListener(task -> {
-                        if(task.isSuccessful()) {
-                            Location currentLocation = task.getResult();
-                            LatLng userLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
-                        }
-                        else{
-                            System.out.println("fail");
-                        }
-                    });
-                }
-                catch (SecurityException e) {
-                    System.out.println(e.getMessage());
-                }
+                locate();
                 mMap.setMyLocationEnabled(true);
             }
 
@@ -255,6 +258,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         sharedViewModel.getDisplayHeatmap().observe(getViewLifecycleOwner(), aBoolean -> heatmap.setChecked(aBoolean));
         sharedViewModel.getDisplayAll().observe(getViewLifecycleOwner(), aBoolean -> displayAll.setChecked(aBoolean));
         sharedViewModel.getDisplayMine().observe(getViewLifecycleOwner(), aBoolean -> displayMine.setChecked(aBoolean));
+
     }
 
     //Create heat map
