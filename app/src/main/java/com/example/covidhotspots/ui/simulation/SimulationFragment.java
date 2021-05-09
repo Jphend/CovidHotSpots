@@ -18,18 +18,21 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import com.example.covidhotspots.R;
 import com.example.covidhotspots.SharedViewModel;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.*;
+import com.google.android.gms.tasks.Task;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
 
@@ -51,7 +54,7 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
             mMap = googleMap;
             mMap.setOnMyLocationButtonClickListener(this);
             mMap.setOnMyLocationButtonClickListener(this);
@@ -85,11 +88,24 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
 
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
-                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                FusedLocationProviderClient myProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
+                try {
+                    Task<Location> location = myProviderClient.getLastLocation();
+                    location.addOnCompleteListener(task -> {
+                        if(task.isSuccessful()) {
+                            Location currentLocation = task.getResult();
+                            LatLng userLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
-                LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+                        }
+                        else{
+                            System.out.println("fail");
+                        }
+                    });
+                }
+                catch (SecurityException e) {
+                    System.out.println(e.getMessage());
+                }
 
             }
 
@@ -144,7 +160,7 @@ public class SimulationFragment extends Fragment implements GoogleMap.OnMyLocati
         HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
                 .data(coordinates)
                 .build();
-        mMap.addTileOverlay(new TileOverlayOptions().tileProvider(provider)).setVisible(true);
+        Objects.requireNonNull(mMap.addTileOverlay(new TileOverlayOptions().tileProvider(provider))).setVisible(true);
     }
 
     @Override

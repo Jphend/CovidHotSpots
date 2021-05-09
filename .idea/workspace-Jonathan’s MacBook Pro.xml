@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="19b13eb3-ff09-4d95-a8cc-b8f05bbd6baf" name="Default Changelist" comment="Cleaned up code">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/app/proguard-rules.pro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/com/example/covidhotspots/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/com/example/covidhotspots/ExampleInstrumentedTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/debug/res/values/google_maps_api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/debug/res/values/google_maps_api.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/Retrofit/RetrofitClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/Retrofit/RetrofitClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/Retrofit/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/Retrofit/Service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/ui/home/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/ui/home/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/ui/login/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/ui/login/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/ui/news/NewsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/ui/news/NewsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/ui/news/NewsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/ui/news/NewsViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/ui/settings/SettingsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/covidhotspots/ui/settings/SettingsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/ic_search.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_search.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_search.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_search.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_search.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_search.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_search.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_search.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_search.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_home_black_24dp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_home_black_24dp.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_notifications_black_24dp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_notifications_black_24dp.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_news.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_news.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/release/res/values/google_maps_api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/release/res/values/google_maps_api.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/example/covidhotspots/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/example/covidhotspots/ExampleUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/atob.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/atob.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/browserslist.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/browserslist.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/escodegen.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/escodegen.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esgenerate.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/esgenerate.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esparse.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/esparse.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esvalidate.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/esvalidate.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/import-local-fixture.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/import-local-fixture.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/is-ci.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/is-ci.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/is-docker.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/is-docker.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/jest-runtime.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/jest-runtime.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/jest.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/jest.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/js-yaml.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/js-yaml.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/jsesc.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/jsesc.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/json5.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/json5.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/mime.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/mime.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/mkdirp.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/mkdirp.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/node-which.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/node-which.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/parser.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/parser.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/rimraf.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/rimraf.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/sane.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/sane.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/semver.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/semver.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/sshpk-conv.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/sshpk-conv.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/sshpk-sign.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/sshpk-sign.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/sshpk-verify.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/sshpk-verify.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/uuid.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/uuid.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/watch.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/watch.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/node_modules/.bin/semver.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/core/node_modules/.bin/semver.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/helper-compilation-targets/node_modules/.bin/semver.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/helper-compilation-targets/node_modules/.bin/semver.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/highlight/node_modules/color-name/.npmignore" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/highlight/node_modules/color-name/.npmignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/highlight/node_modules/color-name/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/highlight/node_modules/color-name/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/highlight/node_modules/color-name/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/highlight/node_modules/color-name/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/highlight/node_modules/color-name/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/highlight/node_modules/color-name/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@babel/highlight/node_modules/color-name/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@babel/highlight/node_modules/color-name/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/babel__core/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/babel__core/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/babel__generator/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/babel__generator/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/babel__template/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/babel__template/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/babel__traverse/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/babel__traverse/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/bson/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/bson/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/graceful-fs/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/graceful-fs/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/istanbul-lib-coverage/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/istanbul-lib-coverage/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/istanbul-lib-report/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/istanbul-lib-report/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/istanbul-lib-report/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/istanbul-lib-report/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/istanbul-reports/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/istanbul-reports/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/jest/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/jest/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/jest/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/jest/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/mongodb/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/mongodb/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/node/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/node/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/normalize-package-data/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/normalize-package-data/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/prettier/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/prettier/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/stack-utils/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/stack-utils/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/yargs-parser/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/yargs-parser/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@types/yargs/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@types/yargs/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/char-regex/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/char-regex/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/char-regex/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/char-regex/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/char-regex/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/char-regex/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/char-regex/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/char-regex/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/char-regex/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/char-regex/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/color-name/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/color-name/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/color-name/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/color-name/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/color-name/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/color-name/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/color-name/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/color-name/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/component-emitter/History.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/component-emitter/History.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/component-emitter/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/component-emitter/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/component-emitter/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/component-emitter/Readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/component-emitter/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/component-emitter/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/decimal.js/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/decimal.js/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/decimal.js/LICENCE.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/decimal.js/LICENCE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/decimal.js/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/decimal.js/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/decimal.js/decimal.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/decimal.js/decimal.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/decimal.js/decimal.global.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/decimal.js/decimal.global.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/decimal.js/decimal.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/decimal.js/decimal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/decimal.js/decimal.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/decimal.js/decimal.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/decimal.js/doc/API.html" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/decimal.js/doc/API.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/decimal.js/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/decimal.js/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many-noend/original" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many-noend/original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many-noend/part5" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many-noend/part5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many-noend/part7.header" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many-noend/part7.header" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many-wrongboundary/original" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many-wrongboundary/original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many-wrongboundary/preamble" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many-wrongboundary/preamble" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many/original" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many/original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many/part5" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many/part5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many/part6.header" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/many/part6.header" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested-full/original" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested-full/original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested-full/part1.header" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested-full/part1.header" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested-full/part2" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested-full/part2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested-full/part2.header" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested-full/part2.header" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested-full/preamble.header" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested-full/preamble.header" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested/original" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested/original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested/part1.header" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested/part1.header" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested/part2" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested/part2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested/part2.header" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/dicer/test/fixtures/nested/part2.header" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/istanbul-lib-instrument/node_modules/.bin/semver.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/istanbul-lib-instrument/node_modules/.bin/semver.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/jest-snapshot/node_modules/.bin/semver.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/jest-snapshot/node_modules/.bin/semver.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/jsdom/node_modules/.bin/acorn.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/jsdom/node_modules/.bin/acorn.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/jsdom/node_modules/acorn-globals/node_modules/.bin/acorn.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/jsdom/node_modules/acorn-globals/node_modules/.bin/acorn.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-00/hyper-schema" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-00/hyper-schema" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-00/json-ref" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-00/json-ref" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-00/links" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-00/links" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-00/schema" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-00/schema" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-01/hyper-schema" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-01/hyper-schema" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-01/json-ref" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-01/json-ref" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-01/links" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-01/links" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-01/schema" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-01/schema" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-02/hyper-schema" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-02/hyper-schema" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-02/json-ref" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-02/json-ref" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-02/links" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-02/links" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-02/schema" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-02/schema" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-03/examples/address" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-03/examples/address" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-03/examples/calendar" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-03/examples/calendar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-03/examples/card" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-03/examples/card" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-03/examples/geo" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-03/examples/geo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-03/examples/interfaces" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-03/examples/interfaces" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-03/hyper-schema" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-03/hyper-schema" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-03/json-ref" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-03/json-ref" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-03/links" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-03/links" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-03/schema" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-03/schema" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-04/hyper-schema" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-04/hyper-schema" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-04/links" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-04/links" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-04/schema" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-04/schema" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-zyp-json-schema-03.xml" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-zyp-json-schema-03.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/draft-zyp-json-schema-04.xml" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/draft-zyp-json-schema-04.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/lib/links.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/lib/links.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/lib/validate.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/lib/validate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/json-schema/test/tests.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/json-schema/test/tests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/make-dir/node_modules/.bin/semver.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/make-dir/node_modules/.bin/semver.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mongoose-schema-jsonschema/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mongoose-schema-jsonschema/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/node-notifier/node_modules/.bin/semver.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/node-notifier/node_modules/.bin/semver.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/node-notifier/node_modules/.bin/uuid.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/node-notifier/node_modules/.bin/uuid.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/resolve-url/.jshintrc" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/resolve-url/.jshintrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/resolve-url/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/resolve-url/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/resolve-url/resolve-url.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/resolve-url/resolve-url.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/resolve-url/test/resolve-url.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/resolve-url/test/resolve-url.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/sane/node_modules/.bin/which.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/sane/node_modules/.bin/which.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/urix/.jshintrc" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/urix/.jshintrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/urix/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/urix/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/urix/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/urix/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/urix/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/urix/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/urix/test/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/urix/test/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="RF8M647VT1R" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="CovidHotSpots" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1qngvoHgxBmPNs6fTR8V8ZVtkZH" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_3a_API_30" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-04-08T18:12:04.689645Z" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="javascript.nodejs.core.library.configured.version" value="14.15.4" />
+    <property name="javascript.nodejs.core.library.typings.version" value="14.14.37" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RecentsManager">
+    <key name="android.template.-1387801857">
+      <recent name="com.example.covidhotspots" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user44328\Desktop\CovidHotSpots\app\src\main\res" />
+      <recent name="C:\Users\user44328\Desktop\CovidHotSpots\app\src\main\res\values" />
+      <recent name="C:\Users\user44328\Desktop\CovidHotSpots" />
+      <recent name="C:\Users\user44328\Desktop\CovidHotSpots\app\src\main\java\com\example\covidhotspots" />
+      <recent name="C:\Users\user44328\Desktop\CovidHotSpots\app\src\main\res\layout" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.covidhotspots" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="CovidHotSpots.app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="CovidHotSpots.app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <Java />
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="19b13eb3-ff09-4d95-a8cc-b8f05bbd6baf" name="Default Changelist" comment="" />
+      <created>1617721000957</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1617721000957</updated>
+      <workItem from="1617721004074" duration="995000" />
+      <workItem from="1617722033772" duration="2595000" />
+      <workItem from="1617724692068" duration="1944000" />
+      <workItem from="1617726855034" duration="325000" />
+      <workItem from="1617727200959" duration="2582000" />
+      <workItem from="1617729851957" duration="7955000" />
+      <workItem from="1617738860746" duration="14310000" />
+      <workItem from="1617796782920" duration="805000" />
+      <workItem from="1617806104256" duration="6019000" />
+      <workItem from="1617839051026" duration="2839000" />
+      <workItem from="1617841984293" duration="1238000" />
+      <workItem from="1617843271668" duration="2487000" />
+      <workItem from="1617845885918" duration="11000" />
+      <workItem from="1617846059620" duration="1929000" />
+      <workItem from="1617897783206" duration="4458000" />
+      <workItem from="1617904347026" duration="5206000" />
+      <workItem from="1617920024554" duration="2820000" />
+      <workItem from="1617927980336" duration="399000" />
+      <workItem from="1617928417108" duration="3301000" />
+    </task>
+    <task id="LOCAL-00001" summary="Main project thus far. Post MVP. Currently working on final objectives.">
+      <created>1617839939416</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1617839939416</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Main project thus far. Post MVP. Currently working on final objectives.">
+      <created>1617840792178</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1617840792178</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Removed unnecessary node modules">
+      <created>1617841623059</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1617841623059</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Removed unnecessary node modules">
+      <created>1617842341289</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1617842341289</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fresh Start">
+      <created>1617844975966</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1617844975966</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Working towards finalising Covid HotSpots">
+      <created>1617846704084</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1617846704084</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Cleaned up code">
+      <created>1617898972403</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1617898972404</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="Main project thus far. Post MVP. Currently working on final objectives." />
+    <MESSAGE value="Removed unnecessary node modules" />
+    <MESSAGE value="Fresh Start" />
+    <MESSAGE value="Working towards finalising Covid HotSpots" />
+    <MESSAGE value="Cleaned up code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaned up code" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

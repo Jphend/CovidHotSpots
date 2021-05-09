@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import com.example.covidhotspots.R;
 import com.example.covidhotspots.SharedViewModel;
 import com.example.covidhotspots.ui.login.LoginActivity;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <TextView android:layout_width="312dp"
+              android:layout_height="682dp"
+              android:padding="1dp"
+              android:id="@+id/welcome"
+              android:typeface="sans"
+              android:textStyle="bold"
+              android:textSize="14sp"
+              android:textColor="#431F63"
+              android:text="The home screen of this application allows you to pinpoint locations that you have been to since contracting COVID-19 via a click on the map, or searching a location. \n\nOn this home screen you can see the pinpointed locations of all other users to help you to plan areas that you may deem high risk. \n\nThe navigation bar at the bottom allows you to navigate between the different destinations of the application. \n\nThe Simulation screen allows you to see how the application would look under the load of many users each pinpointing their own locations. \n\nThe news screen will display the top 3 COVID-19 related articles in the UK. \n\nFinally, the settings screen allows you to customise your experience through options such as imposing a top-layer heatmap based on the pinpoints of all user locations."
+              app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintVertical_bias="1.0" app:layout_constraintHorizontal_bias="0.386">
+    </TextView>
+    <ImageView
+            android:src="@drawable/heatmap"
+            android:layout_width="309dp"
+            android:layout_height="202dp"
+            android:id="@+id/imageView"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.392"
+            android:layout_marginBottom="4dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

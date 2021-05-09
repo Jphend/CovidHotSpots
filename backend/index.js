@@ -92,10 +92,10 @@ function checkHashPassword(userPassword, salt) {
         const email = postData.email;
 
         Location.find({'email': email}, {lat: 1, lng: 1, _id: 0}).lean().then(res => {
-            console.log(JSON.stringify(res));
+            //console.log(JSON.stringify(res));
             result.send(JSON.stringify(res));
         }).catch(err => console.error(`Fatal error occurred: ${err}`));
-    })
+    });
 
     app.get('/showAll', (request, response) => {
         Location.aggregate(
@@ -104,7 +104,10 @@ function checkHashPassword(userPassword, salt) {
                 {$unwind: '$lng'},
                 {$group: {_id:0, lat: {$addToSet: '$lat'}, lng: {$addToSet: '$lng'}}}
             ]
-        ).then(res => {console.log(res); response.send(res);})
+        ).then(res => {
+            console.log(JSON.stringify(res));
+            response.send(JSON.stringify(res));
+        }).catch(err => console.error(`Fatal error occurred: ${err}`));
     });
 
     app.post('/login', (request, response) => {

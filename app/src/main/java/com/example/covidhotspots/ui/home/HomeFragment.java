@@ -10,19 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import com.example.covidhotspots.R;
 import com.example.covidhotspots.Retrofit.RetrofitClient;
 import com.example.covidhotspots.Retrofit.Service;
 import com.example.covidhotspots.SharedViewModel;
 import com.example.covidhotspots.ui.login.LoginActivity;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,6 +32,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -38,8 +41,8 @@ import io.reactivex.schedulers.Schedulers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import retrofit2.Retrofit;
+
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,7 +56,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private static final String userEmail = LoginActivity.getEmail();
 
-    private final ArrayList<LatLng> allCoordinates = new ArrayList<>();
+    private static final ArrayList<LatLng> allCoordinates = LoginActivity.getCoordinates();
 
     private SwitchCompat heatmap;
     private SwitchCompat displayAll;
@@ -71,8 +74,24 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         displayAll = settings.findViewById(R.id.displayAll);
         displayMine = settings.findViewById(R.id.displayMy);
 
-
         mapView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        View welcome_layout = LayoutInflater.from(requireContext())
+                .inflate(R.layout.welcome_layout, null);
+
+        new MaterialStyledDialog.Builder(requireContext())
+                .setIcon(R.drawable.ic_simulate)
+                .setTitle("WELCOME")
+                .setCustomView(welcome_layout)
+                .onNegative((dialog, which) -> dialog.dismiss())
+                .setPositiveText("OK")
+                .onPositive((dialog, which) -> {
+                            TextView welcomeText = welcome_layout.findViewById(R.id.welcome);
+
+                }).show();
+
+
+
         return mapView;
     }
 
@@ -90,7 +109,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
     }
 
         @Override
-        public void onMapReady(GoogleMap googleMap) {
+        public void onMapReady(@NonNull GoogleMap googleMap) {
             mMap = googleMap;
             mMap.setOnMyLocationButtonClickListener(this);
             mMap.setOnMyLocationButtonClickListener(this);
@@ -117,14 +136,31 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
             //Check permissions, set user location and get last known location, enables location features
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             } else {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                mMap.setMyLocationEnabled(true);
-                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+                //Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                //LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
 
+                FusedLocationProviderClient myProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
+                try {
+                    Task<Location> location = myProviderClient.getLastLocation();
+                    location.addOnCompleteListener(task -> {
+                        if(task.isSuccessful()) {
+                            Location currentLocation = task.getResult();
+                            LatLng userLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+                        }
+                        else{
+                            System.out.println("fail");
+                        }
+                    });
+                }
+                catch (SecurityException e) {
+                    System.out.println(e.getMessage());
+                }
+                mMap.setMyLocationEnabled(true);
             }
 
             //Add marker on map click
@@ -144,36 +180,13 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
             });
 
             //Display all locations
+            if(!allCoordinates.isEmpty()) {
                 if(displayAll.isChecked()) {
-                    compositeDisposable.add(service.getAll()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(res -> {
-                                //Parse result into, 1st a JSON array, 2nd a JSON object
-                                JSONArray arr = new JSONArray(res);
-                                JSONObject obj = arr.getJSONObject(0);
-                                String[] lngs = obj.getString("lng").replaceAll("\\[", "")
-                                        .replaceAll("\\]", "").split(",");
-                                String[] lats = obj.getString("lat").replaceAll("\\[", "")
-                                        .replaceAll("\\]", "").split(",");
-
-                                //if lats and lngs arrays are the same size (should always be true)
-                                if (lats.length == lngs.length) {
-                                    for (int i = 0; i < lats.length; i++) {
-                                        String lat = lats[i];
-                                        String lng = lngs[i];
-                                        double a = Double.parseDouble(lat);
-                                        double b = Double.parseDouble(lng);
-                                        LatLng latLng = new LatLng(a, b);
-                                        mMap.addMarker(new MarkerOptions().position(latLng));
-                                        allCoordinates.add(latLng);
-                                        System.out.println(allCoordinates);
-
-                                    }
-                                }
-                            }));
+                    for (LatLng coord:allCoordinates) {
+                        mMap.addMarker(new MarkerOptions().position(coord));
+                    }
                 }
-
+            }
 
             // if the display my locations setting is checked, display current user's location entries
             if(displayMine.isChecked()) {
@@ -182,24 +195,33 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(res -> {
                             mMap.clear();
+                            //Assign string result to JSON array (result if populated has only one very long entry
                             JSONArray arr = new JSONArray(res);
+                            //If it is not null
                             if(!(arr.isNull(0))) {
+                                //assign to JSON object
                                 JSONObject obj = arr.getJSONObject(0);
-                                String[] lngs = obj.getString("lng").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
-                                String[] lats = obj.getString("lat").replaceAll("\\[", "").replaceAll("\\]", "").split(",");
-
+                                //Split longitude values into string array, cutting off the opening and closing array brackets and splitting by commas
+                                String[] lngs = obj.getString("lng").replaceAll("\\[", "")
+                                        .replaceAll("]", "").split(",");
+                                //Same for latitude values
+                                String[] lats = obj.getString("lat").replaceAll("\\[", "")
+                                        .replaceAll("]", "").split(",");
+                                //If latitude and longitude arrays match in length
                                 if (lats.length == lngs.length) {
                                     for (int i = 0; i < lats.length; i++) {
                                         String lat = lats[i];
                                         String lng = lngs[i];
+                                        //Parse the string in the array and assign to a double
                                         double a = Double.parseDouble(lat);
                                         double b = Double.parseDouble(lng);
+                                        //Create a LatLng value from the doubles
                                         LatLng latLng = new LatLng(a, b);
+                                        //Place on map
                                         mMap.addMarker(new MarkerOptions().position(latLng));
                                     }
                                 }
                             }
-
                         }));
             }
 
@@ -231,9 +253,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         super.onActivityCreated(savedInstanceState);
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getDisplayHeatmap().observe(getViewLifecycleOwner(), aBoolean -> heatmap.setChecked(aBoolean));
-
         sharedViewModel.getDisplayAll().observe(getViewLifecycleOwner(), aBoolean -> displayAll.setChecked(aBoolean));
-
         sharedViewModel.getDisplayMine().observe(getViewLifecycleOwner(), aBoolean -> displayMine.setChecked(aBoolean));
     }
 
@@ -243,7 +263,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
         HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
                 .data(allCoordinates)
                 .build();
-        mMap.addTileOverlay(new TileOverlayOptions().tileProvider(provider)).setVisible(true);
+        Objects.requireNonNull(mMap.addTileOverlay(new TileOverlayOptions().tileProvider(provider))).setVisible(true);
     }
 
     @Override
@@ -285,6 +305,7 @@ public class HomeFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
         double lat = address.getLatitude();
         double lng = address.getLatitude();
+
         compositeDisposable.add(service.saveSearchLocation(userEmail, lat, lng)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

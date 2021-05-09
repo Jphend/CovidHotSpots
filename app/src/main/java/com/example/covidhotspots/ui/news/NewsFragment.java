@@ -10,11 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import com.example.covidhotspots.R;
-import com.example.covidhotspots.SharedViewModel;
 import com.prof.rssparser.Article;
 import com.prof.rssparser.Parser;
 import java.util.ArrayList;
@@ -83,9 +80,4 @@ public class NewsFragment extends Fragment {
         return root;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        SharedViewModel sharedViewModel = ViewModelProviders.of(requireActivity()).get(SharedViewModel.class);
-    }
 }

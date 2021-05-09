@@ -23,6 +23,8 @@
     <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editText"
             android:hint="@string/search_location"
+            android:ellipsize="start"
+            android:gravity="center_horizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
@@ -31,7 +33,8 @@
             app:met_baseColor="@android:color/black"
             app:met_primaryColor="@android:color/black"
             android:background="@android:color/white"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
+            android:textSize="20sp"
             app:met_iconPadding="0dp"
             android:drawableEnd="@drawable/ic_search"
             android:imeOptions="actionSearch"
